@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pedidos · Flamora</title>
+<style>
+  :root{
+    --coral:#E8604C; --coral-dark:#C84A38; --ink:#2B1E24; --muted:#7A6A70;
+    --bg:#FFF8F5; --card:#FFFFFF; --line:#F0DAD3;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.5}
+  main{max-width:680px;margin:0 auto;padding:28px 18px 60px}
+  h1{font-size:2.2rem;margin:0;color:var(--coral);letter-spacing:.04em}
+  .sub{margin:4px 0 28px;color:var(--muted)}
+  h2{font-size:1.15rem;margin:32px 0 10px}
+
+  .producto{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:16px}
+  .producto img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--line)}
+  .producto .cuerpo{padding:14px 16px 16px}
+  .producto h3{margin:0;font-size:1.15rem}
+  .producto .detalle{color:var(--muted);font-size:.92rem}
+  .producto .precio{color:var(--coral-dark);font-size:1.1rem;margin:4px 0 8px}
+  .opciones{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .opciones .ancho{grid-column:1 / -1}
+  .fila-agregar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+
+  label{display:block;margin:12px 0 4px;font-size:.92rem}
+  .opciones label{margin:0 0 3px}
+  input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;
+        font:inherit;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--coral);outline-offset:1px}
+
+  .qty{display:flex;align-items:center;gap:10px}
+  .qty button{width:36px;height:36px;border-radius:50%;border:1px solid var(--coral);background:#fff;
+              color:var(--coral);font-size:1.2rem;cursor:pointer}
+  .qty button:hover{background:var(--coral);color:#fff}
+  .qty span{min-width:20px;text-align:center}
+  .agregar{padding:10px 16px;border:1px solid var(--coral);border-radius:10px;background:#fff;color:var(--coral-dark);
+           font:inherit;cursor:pointer}
+  .agregar:hover{background:var(--coral);color:#fff}
+
+  .linea{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .linea small{display:block;color:var(--muted)}
+  .linea button{border:0;background:none;color:var(--coral-dark);cursor:pointer;font:inherit;text-decoration:underline}
+  .vacio{color:var(--muted)}
+  .info-pago{margin-top:8px;padding:10px 12px;background:#fff;border:1px dashed var(--coral);border-radius:10px;font-size:.92rem}
+
+  .total{display:flex;justify-content:space-between;font-size:1.2rem;margin:22px 0 14px;padding-top:14px;border-top:2px solid var(--line)}
+  .send{width:100%;padding:14px;border:0;border-radius:12px;background:var(--coral);color:#fff;font:inherit;font-size:1.05rem;cursor:pointer}
+  .send:hover{background:var(--coral-dark)}
+  .send:disabled{opacity:.6;cursor:wait}
+  .msg{margin-top:12px;color:var(--coral-dark);min-height:1.4em}
+  @media (max-width:420px){.opciones{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+  <h1>FLAMORA</h1>
+  <p class="sub">Velas artesanales de cera de soya. Arma tu pedido y lo confirmamos por WhatsApp.</p>
+
+  <h2>Elige tus velas</h2>
+  <div id="catalogo"></div>
+
+  <h2>Tu pedido</h2>
+  <div id="carrito"></div>
+
+  <h2>Tus datos</h2>
+  <label for="nombre">Nombre</label>
+  <input id="nombre" autocomplete="name">
+  <label for="telefono">WhatsApp (con lada)</label>
+  <input id="telefono" type="tel" autocomplete="tel" placeholder="998 123 4567">
+  <label for="entrega">Entrega</label>
+  <select id="entrega">
+    <option>Recoger</option>
+    <option>Envío a domicilio</option>
+  </select>
+  <label for="direccion">Dirección (si es envío)</label>
+  <input id="direccion" autocomplete="street-address">
+  <label for="fecha">¿Para cuándo la necesitas?</label>
+  <input id="fecha" type="date">
+  <label for="dedicatoria">Dedicatoria o comentarios</label>
+  <textarea id="dedicatoria" rows="3"></textarea>
+
+  <label for="pago">Forma de pago</label>
+  <select id="pago"></select>
+  <div class="info-pago" id="infoPago"></div>
+
+  <div class="total"><span>Total</span><strong id="total">$0</strong></div>
+  <button class="send" id="enviar">Enviar pedido por WhatsApp</button>
+  <div class="msg" id="msg" role="status"></div>
+</main>
+
+<script>
+/* ====== CONFIGURA ESTO ====== */
+const WHATSAPP = "5219982160371";                         // 52 + 1 + lada + número, sin signos
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbxbQ140PVNboFoMQ6xinvmjZO1aVbhTtsFeX5V6MiSRsGJaX5puPJqNrMzXXszFK3oO/exec"; // termina en /exec
+
+// Formas de pago y el texto que se muestra al elegirlas.
+// Mejor no pongas aquí tu CLABE ni número de cuenta: la página es pública. Envíala por WhatsApp al confirmar.
+const PAGOS = {
+  "Transferencia": "Te enviamos los datos por WhatsApp al confirmar tu pedido.",
+  "Efectivo": "Pagas en efectivo al recoger o al recibir tu pedido.",
+  "Depósito": "Te enviamos los datos por WhatsApp al confirmar tu pedido."
+};
+
+// Un bloque por vela. "foto" es la ruta de la imagen dentro de tu repositorio.
+// En "empaques", "extra" es lo que se suma al precio (0 si no cuesta más).
+const CATALOGO = [
+  {
+    id: "v1",
+    nombre: "Reno navideño pequeño",
+    foto: "fotos/Reno navideño pequeño.jpg",
+    detalle: "Cera de soya · Altura 6 cm",
+    precio: 60,
+    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    empaques: [
+      { nombre: "Caja de carton grande", extra: 0 },
+      { nombre: "Caja de regalo", extra: 40 }
+    ]
+  },
+  {
+    id: "v2",
+    nombre: "Vela vainilla",
+    foto: "fotos/vela-vainilla.jpg",
+    detalle: "Cera de soya · 200 g",
+    precio: 180,
+    colores: ["Crema", "Coral"],
+    aromas: ["Vainilla", "Vainilla y canela"],
+    empaques: [
+      { nombre: "Bolsa kraft", extra: 0 },
+      { nombre: "Caja de regalo", extra: 40 }
+    ]
+  }
+];
+/* ============================ */
+
+const $ = id => document.getElementById(id);
+const money = n => "$" + n.toLocaleString("es-MX");
+const cantidades = {};
+let carrito = [];
+
+function opciones(lista){ return lista.map(o => `<option>${o}</option>`).join(""); }
+
+function pintarCatalogo(){
+  $("catalogo").innerHTML = CATALOGO.map(p => {
+    cantidades[p.id] = 1;
+    return `
+    <div class="producto">
+      <img src="${p.foto}" alt="${p.nombre}" loading="lazy" onerror="this.style.display='none'">
+      <div class="cuerpo">
+        <h3>${p.nombre}</h3>
+        <div class="detalle">${p.detalle}</div>
+        <div class="precio">${money(p.precio)}</div>
+        <div class="opciones">
+          <div><label for="c-${p.id}">Color</label><select id="c-${p.id}">${opciones(p.colores)}</select></div>
+          <div><label for="a-${p.id}">Aroma</label><select id="a-${p.id}">${opciones(p.aromas)}</select></div>
+          <div class="ancho"><label for="e-${p.id}">Empaque</label>
+            <select id="e-${p.id}">${p.empaques.map((e,i) =>
+              `<option value="${i}">${e.nombre}${e.extra ? " (+" + money(e.extra) + ")" : ""}</option>`).join("")}</select></div>
+        </div>
+        <div class="fila-agregar">
+          <div class="qty">
+            <button type="button" data-id="${p.id}" data-d="-1" aria-label="Quitar uno">−</button>
+            <span id="q-${p.id}">1</span>
+            <button type="button" data-id="${p.id}" data-d="1" aria-label="Agregar uno">+</button>
+          </div>
+          <button type="button" class="agregar" data-agregar="${p.id}">Agregar al pedido</button>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function pintarCarrito(){
+  if(!carrito.length){
+    $("carrito").innerHTML = '<p class="vacio">Aún no has agregado velas.</p>';
+  } else {
+    $("carrito").innerHTML = carrito.map((l,i) => `
+      <div class="linea">
+        <div><b>${l.cantidad} x ${l.producto}</b>
+          <small>${l.color} · ${l.aroma} · ${l.empaque}</small></div>
+        <div style="text-align:right">${money(l.subtotal)}<br><button type="button" data-quitar="${i}">Quitar</button></div>
+      </div>`).join("");
+  }
+  $("total").textContent = money(carrito.reduce((s,l) => s + l.subtotal, 0));
+}
+
+$("catalogo").addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+
+  if(b.dataset.d){                                  // + / −
+    const id = b.dataset.id;
+    cantidades[id] = Math.max(1, cantidades[id] + Number(b.dataset.d));
+    $("q-"+id).textContent = cantidades[id];
+  }
+  if(b.dataset.agregar){                            // agregar al pedido
+    const p = CATALOGO.find(x => x.id === b.dataset.agregar);
+    const emp = p.empaques[Number($("e-"+p.id).value)];
+    const unit = p.precio + emp.extra;
+    carrito.push({
+      producto: p.nombre, color: $("c-"+p.id).value, aroma: $("a-"+p.id).value,
+      empaque: emp.nombre, cantidad: cantidades[p.id], subtotal: unit * cantidades[p.id]
+    });
+    cantidades[p.id] = 1; $("q-"+p.id).textContent = 1;
+    $("msg").textContent = "";
+    pintarCarrito();
+  }
+});
+
+$("carrito").addEventListener("click", e => {
+  const b = e.target.closest("[data-quitar]"); if(!b) return;
+  carrito.splice(Number(b.dataset.quitar), 1);
+  pintarCarrito();
+});
+
+// Formas de pago
+$("pago").innerHTML = Object.keys(PAGOS).map(k => `<option>${k}</option>`).join("");
+const mostrarPago = () => $("infoPago").textContent = PAGOS[$("pago").value];
+$("pago").addEventListener("change", mostrarPago);
+
+$("enviar").addEventListener("click", async () => {
+  const nombre = $("nombre").value.trim(), tel = $("telefono").value.trim();
+  if(!carrito.length) return $("msg").textContent = "Agrega al menos una vela a tu pedido.";
+  if(!nombre || !tel) return $("msg").textContent = "Escribe tu nombre y tu WhatsApp.";
+
+  const total = carrito.reduce((s,l) => s + l.subtotal, 0);
+  const pedido = {
+    nombre, telefono: tel, entrega: $("entrega").value, direccion: $("direccion").value.trim(),
+    fechaEntrega: $("fecha").value, dedicatoria: $("dedicatoria").value.trim(), pago: $("pago").value,
+    detalle: carrito.map(l => `${l.cantidad} x ${l.producto} (${l.color}, ${l.aroma}, ${l.empaque})`).join("; "),
+    total
+  };
+
+  $("enviar").disabled = true; $("msg").textContent = "Guardando tu pedido…";
+
+  // 1) Guardar en Google Sheets (si falla, igual abrimos WhatsApp)
+  try{
+    await Promise.race([
+      fetch(URL_SCRIPT, { method:"POST", mode:"no-cors",
+        headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:JSON.stringify(pedido) }),
+      new Promise((_,rej) => setTimeout(rej, 6000))
+    ]);
+  }catch(err){ console.warn("No se pudo guardar en Sheets", err); }
+
+  // 2) Abrir WhatsApp con el resumen
+  const texto =
+`Hola, quiero hacer un pedido en Flamora:
+${carrito.map(l => `• ${l.cantidad} x ${l.producto} – ${l.color}, ${l.aroma}, ${l.empaque} (${money(l.subtotal)})`).join("\n")}
+Total: ${money(total)}
+Pago: ${pedido.pago}
+Nombre: ${nombre}
+Entrega: ${pedido.entrega}${pedido.direccion ? " – " + pedido.direccion : ""}
+${pedido.fechaEntrega ? "Para el: " + pedido.fechaEntrega + "\n" : ""}${pedido.dedicatoria ? "Dedicatoria: " + pedido.dedicatoria : ""}`;
+  window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(texto);
+});
+
+pintarCatalogo();
+pintarCarrito();
+mostrarPago();
+</script>
+</body>
+</html>
