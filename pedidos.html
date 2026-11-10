@@ -134,7 +134,7 @@
 </header>
 
 <main id="catalogo">
-  <h1>Nuestras velas</h1>
+  <h1>Temporada navideña</h1>
   <div class="barra">
     <label for="orden" style="margin:0">Ordenar:</label>
     <select id="orden" style="width:auto">
@@ -167,10 +167,14 @@
   <label for="entrega">Entrega</label>
   <select id="entrega">
     <option>Recoger</option>
-    <option>Envío a domicilio</option>
+    <option>Punto medio</option>
   </select>
-  <label for="direccion">Dirección (si es envío)</label>
-  <input id="direccion" autocomplete="street-address">
+  <label for="direccion">Dirección (si es punto medio)</label>
+  <select id="direccion">
+    <option>Plaza las Amerícas</option>
+    <option>Chedraui Av. Tulum</option>
+    <option>Soriana Andres Q.roo</option>
+    <option>Plaza héroes</option>
   <label for="fecha">¿Para cuándo la necesitas?</label>
   <input id="fecha" type="date">
   <label for="dedicatoria">Dedicatoria o comentarios</label>
@@ -189,7 +193,7 @@
 
 <script>
 /* ====== CONFIGURA ESTO ====== */
-const WHATSAPP = "5219982160371";                         // 52 + 1 + lada + número, sin signos
+const WHATSAPP = "5219981161197";                         // 52 + 1 + lada + número, sin signos
 const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbxbQ140PVNboFoMQ6xinvmjZO1aVbhTtsFeX5V6MiSRsGJaX5puPJqNrMzXXszFK3oO/exec"; // termina en /exec
 
 // Formas de pago y el texto que se muestra al elegirlas.
@@ -197,7 +201,6 @@ const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbxbQ140PVNboFoMQ6xin
 const PAGOS = {
   "Transferencia": "Te enviamos los datos por WhatsApp al confirmar tu pedido.",
   "Efectivo": "Pagas en efectivo al recoger o al recibir tu pedido.",
-  "Depósito": "Te enviamos los datos por WhatsApp al confirmar tu pedido."
 };
 
 // Un bloque por vela. "foto" es la ruta de la imagen dentro de tu repositorio.
@@ -310,7 +313,7 @@ const CATALOGO = [
     nombre: "Copo de nieve 2",
     foto: "Copo de nieve 2.jpg",
     detalle: "Cera de soya · Altura 0 cm",
-    precio: 00,
+    precio: 1,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
