@@ -276,6 +276,16 @@
     .nav-social{position:static;right:auto;bottom:auto;transform:none;margin:0}
   }
 
+
+/* Sección independiente: Todos los diseños */
+.todas-construccion{margin:42px auto 70px;padding:64px 24px;text-align:center;max-width:920px;
+  background:linear-gradient(145deg,#fbf7f2,#f3e9df);border:1px solid #eadfd3;border-radius:18px}
+.todas-construccion h2{margin:8px 0 14px;font-size:clamp(1.8rem,4vw,2.7rem);color:#55443d}
+.todas-construccion p{max-width:650px;margin:10px auto;color:#76665d;line-height:1.7}
+.todas-construccion .construccion-icono{font-size:2.8rem;color:#b28d72;margin:10px auto}
+.todas-construccion .construccion-destacado{font-weight:700;color:#8b6852;letter-spacing:.04em}
+.todas-construccion .hero-primary{display:inline-block;margin-top:18px}
+
 </style>
 </head>
 <body>
@@ -355,7 +365,7 @@
       <option value="az">Nombre A–Z</option>
     </select>
   </div>
-  <div id="todas-las-velas"><div class="grid" id="grid"></div></div>
+  <div id="catalogo-actual"><div class="grid" id="grid"></div></div>
 
   <!-- ===== SECCIÓN EMPAQUES (solo para visualizar) ===== -->
   <section id="empaques" class="emp-sec">
@@ -421,6 +431,17 @@
     </script>
   </section>
 </main>
+
+<section id="todas-las-velas" class="contenido-editorial todas-construccion">
+  <p class="guia-kicker">NUEVOS DISEÑOS EN CAMINO</p>
+  <div class="construccion-icono" aria-hidden="true">✧</div>
+  <h2>¡Estamos creando algo especial!</h2>
+  <p>Muy pronto encontrarás aquí más diseños de velas artesanales Flamora.</p>
+  <p class="construccion-destacado">Esta sección está en construcción.</p>
+  <p>Estamos trabajando en nuevas fotografías y descripciones para compartir contigo más de nuestras creaciones.</p>
+  <a class="hero-primary" href="#catalogo">Explorar colección actual</a>
+</section>
+
 
 <section id="eventos" class="contenido-editorial eventos">
   <p class="guia-kicker">DETALLES PARA CELEBRAR</p>
@@ -532,7 +553,7 @@ const CATALOGO = [
     foto: "Reno navideño pequeño.jpg",
     detalle: "Cera de soya · Altura 6 cm",
     precio: 65,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
@@ -549,7 +570,7 @@ const CATALOGO = [
     foto: "Reno navideño grande.jpg",
     detalle: "Cera de soya · Altura 10.5 cm",
     precio: 76,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
@@ -566,7 +587,7 @@ const CATALOGO = [
     foto: "Bubble Cube pequeño.jpg",
     detalle: "Cera de soya · Altura 3 cm",
     precio: 55,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
@@ -583,7 +604,7 @@ const CATALOGO = [
     foto: "Bubble Cube grande.jpg",
     detalle: "Cera de soya · Altura 5.5 cm",
     precio: 95,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
@@ -600,7 +621,7 @@ const CATALOGO = [
     foto: "Devocional navideño.jpg",
     detalle: "Cera de soya · Altura 7 cm",
     precio: 60,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
@@ -617,7 +638,7 @@ const CATALOGO = [
     foto: "Copo de nieve 1.jpg",
     detalle: "Cera de soya · Altura 5.5 cm",
     precio: 65,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
@@ -634,7 +655,7 @@ const CATALOGO = [
     foto: "Copo de nieve 2.jpg",
     detalle: "Cera de soya · Altura 5.5 cm",
     precio: 65,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
@@ -651,7 +672,7 @@ const CATALOGO = [
     foto: "Árbol navideño.jpg",
     detalle: "Cera de soya · Altura 6 cm",
     precio: 65,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
@@ -668,7 +689,7 @@ const CATALOGO = [
     foto: "Galleta de jengibre.jpg",
     detalle: "Cera de soya · Altura 6 cm",
     precio: 65,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
@@ -685,7 +706,7 @@ const CATALOGO = [
     foto: "Noche buena.jpg",
     detalle: "Cera de soya · Altura 4.5 cm",
     precio: 52,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
@@ -702,7 +723,7 @@ const CATALOGO = [
     foto: "Set navideño.jpg",
     detalle: "Cera de soya · Unicamente con empaque de caja grande",
     precio: 185,
-    colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
+    colores: ["Natural", "Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
     aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
