@@ -219,7 +219,34 @@
   }
 
 
-  /* Redes sociales oficiales */
+
+  .contenido-editorial{
+    max-width:1080px;margin:0 auto;padding:58px 5vw 48px;text-align:center;
+  }
+  .contenido-editorial h2{
+    font-family:"Cormorant Garamond",Georgia,serif;color:var(--forest);
+    font-size:clamp(2rem,4vw,3rem);line-height:1;margin:5px 0 16px;
+  }
+  .contenido-editorial p:not(.guia-kicker){
+    max-width:760px;margin:8px auto;color:var(--muted);font-size:.92rem;line-height:1.85;
+  }
+  .contenido-editorial.eventos{
+    max-width:none;background:#FFFCF6;border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);padding-top:52px;padding-bottom:58px;
+  }
+  .contenido-editorial .hero-primary{
+    display:inline-flex;margin-top:16px;padding:11px 20px;border-radius:24px;
+    text-decoration:none;font-size:.82rem;font-weight:600;
+  }
+  @media(max-width:900px){
+    nav{gap:18px;padding-left:18px;padding-right:18px;flex-wrap:wrap}
+    .nav-social{position:static;transform:none}
+  }
+  @media(max-width:720px){
+    nav{padding:13px 14px;gap:14px}
+    .nav-social{position:static;transform:none}
+  }
+\n  /* Redes sociales oficiales */
   nav{position:relative;padding-right:190px;padding-left:190px}
   .nav-social{position:absolute;right:5vw;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:15px}
   .social-link{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid var(--line);border-radius:50%;color:var(--coral);background:var(--card);transition:all .2s;text-decoration:none}
@@ -237,6 +264,15 @@
     nav{padding:13px 14px 54px;gap:20px}
     .nav-social{top:auto;bottom:10px;right:50%;transform:translateX(50%);gap:12px}
     .social-link{width:31px;height:31px}
+  }
+
+
+  /* Ajuste de navegación para los nuevos enlaces */
+  nav{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:clamp(12px,1.6vw,24px);padding:15px 18px}
+  .nav-social{position:static;right:auto;top:auto;transform:none;margin-left:4px}
+  @media(max-width:720px){
+    nav{padding:13px 14px;gap:12px}
+    .nav-social{position:static;right:auto;bottom:auto;transform:none;margin:0}
   }
 
 </style>
@@ -257,6 +293,9 @@
   </div>
   <nav aria-label="Navegación principal">
     <a href="#catalogo">Catálogo</a>
+    <a href="#conocenos">Conócenos</a>
+    <a href="#todas-las-velas">Todas las velas</a>
+    <a href="#eventos">Eventos</a>
     <button type="button" id="navPedido">Mi pedido</button>
     <a href="#" id="navContacto" target="_blank" rel="noopener">Contacto</a>
     <div class="nav-social" aria-label="Redes sociales de Flamora">
@@ -293,6 +332,13 @@
   </div>
 </section>
 
+<section id="conocenos" class="contenido-editorial">
+  <p class="guia-kicker">UN POCO DE FLAMORA</p>
+  <h2>Conócenos</h2>
+  <p>En Flamora creamos velas artesanales con dedicación y cariño. Cada pieza está pensada para aportar calidez, decorar tus espacios y acompañar momentos especiales.</p>
+  <p>Gracias por apoyar nuestro pequeño emprendimiento y elegir piezas hechas a mano.</p>
+</section>
+
 <main id="catalogo">
   <div class="catalogo-intro">
     <p class="guia-kicker">LA COLECCIÓN</p>
@@ -308,7 +354,7 @@
       <option value="az">Nombre A–Z</option>
     </select>
   </div>
-  <div class="grid" id="grid"></div>
+  <div id="todas-las-velas"><div class="grid" id="grid"></div></div>
 
   <!-- ===== SECCIÓN EMPAQUES (solo para visualizar) ===== -->
   <section id="empaques" class="emp-sec">
@@ -375,6 +421,12 @@
   </section>
 </main>
 
+<section id="eventos" class="contenido-editorial eventos">
+  <p class="guia-kicker">DETALLES PARA CELEBRAR</p>
+  <h2>Eventos</h2>
+  <p>¿Buscas un detalle especial para tu celebración? En Flamora podemos ayudarte a elegir velas artesanales para acompañar tus momentos importantes.</p>
+  <a class="hero-primary" href="#" id="contactoEventos">Escríbenos por WhatsApp</a>
+</section>
 
 <section class="guia-cuidado" aria-labelledby="guiaTitulo">
   <p class="guia-kicker">✧ GUÍA DE CUIDADOS</p>
@@ -454,8 +506,7 @@ const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbxbQ140PVNboFoMQ6xin
 // Formas de pago y el texto que se muestra al elegirlas.
 // Mejor no pongas aquí tu CLABE ni número de cuenta: la página es pública. Envíala por WhatsApp al confirmar.
 const PAGOS = {
-  "Transferencia": "Te enviamos los datos por WhatsApp al confirmar tu pedido.",
-  "Efectivo": "Pagas en efectivo al recoger o al recibir tu pedido.",
+  "Transferencia": "Te enviamos los datos por WhatsApp al confirmar tu pedido."
 };
 
 // Un bloque por vela. "foto" es la ruta de la imagen dentro de tu repositorio.
@@ -468,7 +519,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Altura 6 cm",
     precio: 65,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -485,7 +536,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Altura 10.5 cm",
     precio: 76,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -502,7 +553,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Altura 3 cm",
     precio: 55,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -519,7 +570,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Altura 5.5 cm",
     precio: 95,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -536,7 +587,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Altura 7 cm",
     precio: 60,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -553,7 +604,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Altura 5.5 cm",
     precio: 65,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -570,7 +621,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Altura 5.5 cm",
     precio: 65,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -587,7 +638,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Altura 6 cm",
     precio: 65,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -604,7 +655,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Altura 6 cm",
     precio: 65,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -621,7 +672,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Altura 4.5 cm",
     precio: 52,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -638,7 +689,7 @@ const CATALOGO = [
     detalle: "Cera de soya · Unicamente con empaque de caja grande",
     precio: 185,
     colores: ["Violeta", "Rosado", "Taro purple", "Fluorencense purple", "Naranja", "Rojo", "Amarillo", "Azul", "Cirulean Azul", "Café", "Verde pasto", "Matcha", "Amarillo macarron", "Verde olivo"],
-    aromas: ["Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
+    aromas: ["Natural", "Pino", "Nochebuena", "Manzana canela", "Canela","Vainilla", "Romero", "Café", "Coco", "Rosas", "Pastel", "Floral", "Lavanda"],
     empaques: [
       { nombre: "Caja grande", extra: 15 },
       { nombre: "Caja individual", extra: 12 },
@@ -749,6 +800,7 @@ $("modal").addEventListener("click", e => {
     });
     $("modal").close();
     pintarCarrito();
+    abrirDrawer();
     const t = $("toast"); t.classList.add("ver"); setTimeout(() => t.classList.remove("ver"), 1800);
   }
 });
@@ -778,7 +830,7 @@ $("navPedido").addEventListener("click", abrirDrawer);
 $("cerrarCarrito").addEventListener("click", cerrarDrawer);
 $("overlay").addEventListener("click", cerrarDrawer);
 document.addEventListener("keydown", e => { if(e.key === "Escape") cerrarDrawer(); });
-$("navContacto").href = "https://wa.me/" + WHATSAPP;
+$("navContacto").href = "https://wa.me/" + WHATSAPP;\n$("contactoEventos").href = "https://wa.me/" + WHATSAPP;
 
 /* ---------- Forma de pago ---------- */
 $("pago").innerHTML = Object.keys(PAGOS).map(k => `<option>${k}</option>`).join("");
